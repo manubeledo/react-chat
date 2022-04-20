@@ -1,5 +1,5 @@
 ``` Proyect in progress ```
 
-``` To run the app npm run dev ```
+``` To run the app in frontend folder use npm run dev ```
 
 
