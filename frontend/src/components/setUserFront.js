@@ -1,18 +1,25 @@
-//import { useNavigate } from "react-router-dom";
 export default function SetUserFront (props) {
-    //const navigate = useNavigate()
     return(
         <>
+        <div className="background">
+        <div className="shape"></div>
+        <div className="shape"></div>
+        </div>
         <form onSubmit={props.sendData}>
-            <div>
-                <label>Username</label>
-                <input onChange={props.handleChange} type="text" name="username" placeholder="Username"/>
-            </div>
-            <button type="submit" className="ui basic button">
-            <i className="icon user"></i>
-            Ingresar
-            </button>
+
+        <label>Username</label>
+        <input onChange={props.handleChange} type="text" placeholder="Email or Phone" id="username"/>
+
+        <label>Password</label>
+        <input type="password" placeholder="Password" id="password"/>
+
+        <button>Log In</button>
+        <div className="social">
+        <div className="go"><i className="fab fa-google"></i>  Google</div>
+        <div className="fb"><i className="fab fa-facebook"></i>  Facebook</div>
+        </div>
         </form>
         </>
     )
 }
+

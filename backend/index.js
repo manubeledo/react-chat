@@ -1,8 +1,19 @@
 const express = require('express')
 const app = express()
+const http = require('http')
 const cors = require('cors')
 require('dotenv').config();
 const PORT = process.env.PORT || 3001
+
+const server = http.createServer(app)
+const io = require('socket.io')(server, {
+    cors: {
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST"],
+      allowedHeaders: ["my-custom-header"],
+      credentials: true
+    }
+  });
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
@@ -23,10 +34,17 @@ app.get('/', (req, res) => res.send('En la raiz del server'))
 
 app.post('/login', (req, res)=>{
     const user = req.body
-    console.log(user)
+    console.log(req.body)
 })
 
-app.listen(PORT, () => {
+io.on('connection', socket => {
+    console.log(`New connection ${socket.id}`)
+    socket.on('conectado', (socket) => {
+        console.log(`Usuario conectado por el socket ${socket}`)        
+    })
+})
+
+server.listen(PORT, () => {
     console.log(`Servidor funcionando en http://localhost:${PORT}`)
 })
 

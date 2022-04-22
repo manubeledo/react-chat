@@ -1,17 +1,15 @@
 import SetUserFront from "./setUserFront"
-import SetUserFront2 from "./setUserFront2"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useState } from 'react'
 
 export default function SetUserLogic () {
     const [user, setUser] = useState({})
     const navigate = useNavigate()
-    const location = useLocation()
 
   const handleChange = (e) => {
       e.preventDefault()
       const {name, value} = e.target
-      setUser({ ...user, [name]: value})
+      setUser({ ...user, name: value})
       console.log(e.target.value)
   }
 
@@ -28,6 +26,6 @@ export default function SetUserLogic () {
   console.log(data)
   }
     return(
-      <SetUserFront2 handleChange={handleChange} sendData={sendData}/>
+      <SetUserFront handleChange={handleChange} sendData={sendData}/>
     )
 }
