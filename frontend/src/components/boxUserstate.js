@@ -1,12 +1,27 @@
 import tw from "tailwind-styled-components"
 import BoxUserSearch from "./boxUsersearch"
 import BoxUserbox from "./boxUserbox"
+import socket from "./socket"
+import {useState, useEffect} from "react"
 
-export default function BoxUserState () {
+
+export default function BoxUserState ({ user }) {
+    const [conectados, setConectados] = useState([]);
+    useEffect(() => {
+        console.log(conectados, 'los conectados')
+    }, [conectados])
+    
+    useEffect(()=>{
+        socket.emit("newuser", user);
+        socket.on('conectados', users => {  
+            setConectados(users)
+        })
+        console.log('conectados', conectados)
+    }, [])
     return(
         <Wrapper>
             <BoxUserSearch/>
-            <BoxUserbox></BoxUserbox>
+            <BoxUserbox connectedUsers={conectados} user={ user }/>
         </Wrapper>
     )
 }
