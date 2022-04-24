@@ -3,10 +3,10 @@ import BoxFullChatbox from './boxFullchatbox'
 import BoxReceiver from "./boxReceiver"
 import BoxUserState from './boxUserstate'
 
-export default function MainChatbox () {
+export default function MainChatbox ({ user }) {
     return(
         <Wrapper>
-            <BoxUserState/>
+            <BoxUserState user = { user }/>
             <BoxFullChatbox/>
         </Wrapper>
     )
