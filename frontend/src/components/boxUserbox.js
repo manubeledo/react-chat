@@ -18,7 +18,7 @@ export default function Userbox(props) {
     //     })
     //     console.log('conectados', conectados)
     // }, [])
-
+    console.log('los usuarios', props)
         return(
             <>
             <div id="plist" className="people-list">

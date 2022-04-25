@@ -6,6 +6,7 @@ import MainChatbox from "./mainChatbox";
 
 export default function SetUserLogic () {
     const [user, setUser] = useState({})
+    const [usuarios, setUsuarios] = useState([])
     const [registrado, setRegistrado] = useState(false);
     const navigate = useNavigate()
 
@@ -32,13 +33,17 @@ export default function SetUserLogic () {
 
     registrar()
 
+    socket.on('conectados', users => {  
+      setUsuarios(users)
+    })
     // navigate('/chat')
     console.log(user)
+    console.log(usuarios)
 
   }
     return(
       <>
-      {registrado == true ? <MainChatbox user = { user } /> : <SetUserFront handleChange={handleChange} sendData={sendData}/>}
+      {registrado == true ? <MainChatbox user = { user } usuarios = { usuarios }/> : <SetUserFront handleChange={handleChange} sendData={sendData}/>}
       </>
     )
 }
