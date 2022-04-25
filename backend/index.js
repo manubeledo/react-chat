@@ -13,7 +13,7 @@ const io = require('socket.io')(server, {
       allowedHeaders: ["my-custom-header"],
       credentials: true
     }
-  });
+});
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
@@ -33,15 +33,23 @@ app.use(cors(corsConfig))
 app.get('/', (req, res) => res.send('En la raiz del server'))
 
 app.post('/login', (req, res)=>{
-    const user = req.body
-    console.log(req.body)
+    const user = req.body.name
+    // console.log(req.body.name)
+    res.json(user)
 })
 
+let users = []
+
 io.on('connection', socket => {
+
     console.log(`New connection ${socket.id}`)
-    socket.on('conectado', (socket) => {
-        console.log(`Usuario conectado por el socket ${socket}`)        
+
+    socket.on('newuser', (usuario) => {
+        console.log('Nuevo usuario logueado con el nombre:', usuario.name)
+        users.push(usuario.name)
+        io.emit('conectados', users)
     })
+
 })
 
 server.listen(PORT, () => {
