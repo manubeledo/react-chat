@@ -74,11 +74,11 @@
   overflow-y: hidden;
 } */
 
-.people-list .chat-list li {
+/*.people-list .chat-list li {
   padding: 10px 15px;
   list-style: none;
   border-radius: 3px;
-}
+}*/
 
 
 /* HOVER DEL USUARIO */
@@ -246,6 +246,12 @@
   float: right
 }
 
+.clearfix {
+  padding: 10px 15px;
+  list-style: none;
+  border-radius: 3px;
+}
+
 .clearfix:after {
   visibility: hidden;
   display: block;
@@ -253,6 +259,10 @@
   content: " ";
   clear: both;
   height: 0
+}
+
+.selected-user {
+  background-color: white;
 }
 
 @media only screen and (max-width: 767px) {

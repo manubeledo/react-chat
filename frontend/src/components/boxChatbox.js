@@ -1,9 +1,24 @@
+import { useEffect, useState } from "react"
 import tw from "tailwind-styled-components"
+import socket from "./socket"
 
-export default function BoxChatBox () {
+export default function BoxChatBox ({user}) {
+
+    const [msgs, setMsgs] = useState([])
+
+    useEffect(() => {
+        socket.on('messages', allMessages => {
+            setMsgs(allMessages)
+        })
+    }, [])
+
     return(
         <Wrapper>
-                <h6>BoxChatBox</h6>
+            {msgs.map(({...msgs}) => (
+                <div>
+                <h2>{msgs.message}</h2>
+                </div>
+            ))}
         </Wrapper>
     )
 }
