@@ -1,19 +1,21 @@
 import SetUserFront from "./setUserFront"
 import { useNavigate } from "react-router-dom"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import socket from './socket';
 import MainChatbox from "./mainChatbox";
+import UserContext from './context/currentUser'
 
 export default function SetUserLogic () {
     const [user, setUser] = useState({})
     const [usuarios, setUsuarios] = useState([])
     const [registrado, setRegistrado] = useState(false);
-    const navigate = useNavigate()
+    const { setCurrentUser } = useContext(UserContext)
 
   const handleChange = (e) => {
       e.preventDefault()
       const {name, value} = e.target
       setUser({ ...user, name: value})
+      setCurrentUser({...user})
   }
 
   const registrar = (e) => {
@@ -24,21 +26,10 @@ export default function SetUserLogic () {
 
   const sendData = async (e) => {
     e.preventDefault()
-    await fetch('http://localhost:5000/login', {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: {'Content-Type': 'application/json'},
-      credentials: 'include',
-    })
-
     registrar()
-
     socket.on('conectados', users => {  
       setUsuarios(users)
     })
-    // navigate('/chat')
-    console.log(user)
-    console.log(usuarios)
 
   }
     return(

@@ -4,6 +4,7 @@ const http = require('http')
 const cors = require('cors')
 require('dotenv').config();
 const PORT = process.env.PORT || 3001
+const { chatModel : db } = require('../backend/config/database/index')
 
 const server = http.createServer(app)
 const io = require('socket.io')(server, {
@@ -32,23 +33,33 @@ app.use(cors(corsConfig))
 
 app.get('/', (req, res) => res.send('En la raiz del server'))
 
-app.post('/login', (req, res)=>{
-    const user = req.body.name
-    // console.log(req.body.name)
-    res.json(user)
-})
-
 let users = []
+let messages = []
 
 io.on('connection', socket => {
 
     console.log(`New connection ${socket.id}`)
 
     socket.on('newuser', (usuario) => {
-        console.log('Nuevo usuario logueado con el nombre:', usuario.name)
-        users.push(usuario.name)
+        db.create({username: `${usuario.name}`})
+        usuario.socket_id = socket.id
+        users.push(usuario)
         io.emit('conectados', users)
     })
+
+    socket.on('newmessage', (msg) => {
+        messages.push(msg)
+        console.log(messages)
+        io.emit('messages', messages)
+    })
+
+    socket.on('new-user-message', (msg) => {
+        /*Buscar mensajes entre usuario 1 y usuario2 */
+        /*Asegurarse de que estan en orden */
+        /*Se emiten los mensajes */
+        io.emit('all-chat-messages', messages)
+    })
+
 
 })
 

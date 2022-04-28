@@ -1,9 +1,31 @@
 import tw from "tailwind-styled-components"
+import {useState} from 'react'
+import socket from "./socket"
 
 export default function BoxSendMessage () {
+    const [msg, setMsg] = useState({})
+    const handleChange = (e) => {
+        e.preventDefault()
+        const {message, value} = e.target
+        setMsg({ ...msg, message: value})
+        console.log(msg)
+    }
+
+    const sendMessage = async (e) => {
+        e.preventDefault()
+        socket.emit('newmessage', msg)
+    }
+
     return(
         <Wrapper>
-                <h6>BoxSendMessage</h6>
+                <div className="chat-message clearfix">
+                    <div className="input-group mb-0">
+                        <div className="input-group-prepend">
+                        <button onClick={sendMessage}><i className="fa fa-send"></i></button>
+                        </div>
+                        <input onChange={handleChange} id="chat-message" type="text" className="form-control" placeholder="Enter text here..."/>
+                    </div>
+                </div>
         </Wrapper>
     )
 }
