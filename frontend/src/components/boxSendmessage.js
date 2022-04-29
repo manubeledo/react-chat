@@ -1,8 +1,10 @@
 import tw from "tailwind-styled-components"
-import {useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import socket from "./socket"
+import { UserContext } from './context/currentUser'
 
 export default function BoxSendMessage () {
+<<<<<<< HEAD
     const [msg, setMsg] = useState({
         message,
         chatID: '11111',
@@ -10,13 +12,24 @@ export default function BoxSendMessage () {
         sender,
         receiver
     })
+=======
+    const [msg, setMsg] = useState({})
+    const { currentUser } = useContext(UserContext)
+
+>>>>>>> cbf919d3e0c092b49af46f9f82125c9860c07509
     const handleChange = (e) => {
         e.preventDefault()
         const {message, value} = e.target
-        setMsg({ ...msg, message: value})
+        setMsg({ ...msg, 
+            message: value,
+            sender: currentUser.name
+        })
         console.log(msg)
     }
 
+    useEffect(()=>{
+    console.log(currentUser, 'el current user desde Sendmessage')
+    },[currentUser])
     const sendMessage = async (e) => {
         e.preventDefault()
         setMsg({
