@@ -4,19 +4,9 @@ import socket from "./socket"
 import { UserContext } from './context/currentUser'
 
 export default function BoxSendMessage () {
-<<<<<<< HEAD
-    const [msg, setMsg] = useState({
-        message,
-        chatID: '11111',
-        timestamp,
-        sender,
-        receiver
-    })
-=======
     const [msg, setMsg] = useState({})
     const { currentUser } = useContext(UserContext)
 
->>>>>>> cbf919d3e0c092b49af46f9f82125c9860c07509
     const handleChange = (e) => {
         e.preventDefault()
         const {message, value} = e.target
