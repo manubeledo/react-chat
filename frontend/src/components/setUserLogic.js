@@ -3,19 +3,19 @@ import { useNavigate } from "react-router-dom"
 import { useState, useEffect, useContext } from 'react'
 import socket from './socket';
 import MainChatbox from "./mainChatbox";
-import UserContext from './context/currentUser'
+import { UserContext } from './context/currentUser'
 
 export default function SetUserLogic () {
     const [user, setUser] = useState({})
     const [usuarios, setUsuarios] = useState([])
     const [registrado, setRegistrado] = useState(false);
-    const { setCurrentUser } = useContext(UserContext)
+    const { setCurrentUser, currentUser } = useContext(UserContext)
 
   const handleChange = (e) => {
       e.preventDefault()
       const {name, value} = e.target
-      setUser({ ...user, name: value})
-      setCurrentUser({...user})
+      /*setUser({ ...user, name: value})*/
+      setCurrentUser({ ...currentUser, name: value})
   }
 
   const registrar = (e) => {
@@ -34,7 +34,7 @@ export default function SetUserLogic () {
   }
     return(
       <>
-      {registrado == true ? <MainChatbox user = { user } usuarios = { usuarios }/> : <SetUserFront handleChange={handleChange} sendData={sendData}/>}
+      {registrado == true ? <MainChatbox /*user={user}*/  user={currentUser} usuarios={usuarios}/> : <SetUserFront handleChange={handleChange} sendData={sendData}/>}
       </>
     )
 }

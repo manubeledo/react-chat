@@ -1,16 +1,25 @@
 import tw from "tailwind-styled-components"
-import {useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import socket from "./socket"
+import { UserContext } from './context/currentUser'
 
 export default function BoxSendMessage () {
     const [msg, setMsg] = useState({})
+    const { currentUser } = useContext(UserContext)
+
     const handleChange = (e) => {
         e.preventDefault()
         const {message, value} = e.target
-        setMsg({ ...msg, message: value})
+        setMsg({ ...msg, 
+            message: value,
+            sender: currentUser.name
+        })
         console.log(msg)
     }
 
+    useEffect(()=>{
+    console.log(currentUser, 'el current user desde Sendmessage')
+    },[currentUser])
     const sendMessage = async (e) => {
         e.preventDefault()
         socket.emit('newmessage', msg)
