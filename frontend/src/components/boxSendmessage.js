@@ -3,7 +3,13 @@ import {useState} from 'react'
 import socket from "./socket"
 
 export default function BoxSendMessage () {
-    const [msg, setMsg] = useState({})
+    const [msg, setMsg] = useState({
+        message,
+        chatID: '11111',
+        timestamp,
+        sender,
+        receiver
+    })
     const handleChange = (e) => {
         e.preventDefault()
         const {message, value} = e.target
@@ -13,6 +19,9 @@ export default function BoxSendMessage () {
 
     const sendMessage = async (e) => {
         e.preventDefault()
+        setMsg({
+            ...msg,
+        })
         socket.emit('newmessage', msg)
     }
 
