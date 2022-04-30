@@ -6,7 +6,7 @@ import {useState, useEffect, useContext } from "react"
 import { UserContext } from './context/currentUser'
 
 
-export default function BoxUserState ({ user, usuarios }) {
+export default function BoxUserState ({ usuarios }) {
 
     const [conectados, setConectados] = useState([]);
     const { currentUser } = useContext(UserContext)
@@ -24,7 +24,7 @@ export default function BoxUserState ({ user, usuarios }) {
     return(
         <Wrapper>
             <BoxUserSearch/>
-            <BoxUserbox connectedUsers={conectados} user={ user } usuarios = { usuarios }/>
+            <BoxUserbox connectedUsers={conectados} user={ currentUser } usuarios = { usuarios }/>
         </Wrapper>
     )
 }

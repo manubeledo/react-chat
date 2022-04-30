@@ -1,5 +1,4 @@
 import SetUserFront from "./setUserFront"
-import { useNavigate } from "react-router-dom"
 import { useState, useEffect, useContext } from 'react'
 import socket from './socket';
 import MainChatbox from "./mainChatbox";
@@ -14,7 +13,6 @@ export default function SetUserLogic () {
   const handleChange = (e) => {
       e.preventDefault()
       const {name, value} = e.target
-      /*setUser({ ...user, name: value})*/
       setCurrentUser({ ...currentUser, name: value})
   }
 
@@ -34,7 +32,7 @@ export default function SetUserLogic () {
   }
     return(
       <>
-      {registrado == true ? <MainChatbox /*user={user}*/  user={currentUser} usuarios={usuarios}/> : <SetUserFront handleChange={handleChange} sendData={sendData}/>}
+      {registrado == true ? <MainChatbox user={currentUser} usuarios={usuarios}/> : <SetUserFront handleChange={handleChange} sendData={sendData}/>}
       </>
     )
 }
