@@ -3,11 +3,11 @@ import BoxChatBox from "./boxChatbox"
 import BoxReceiver from "./boxReceiver"
 import BoxSendMessage from "./boxSendmessage"
 
-export default function BoxFullChatbox ({user}) {
+export default function BoxFullChatbox () {
     return(
         <Wrapper>
             <BoxReceiver/>
-            <BoxChatBox user = { user }/>
+            <BoxChatBox/>
             <BoxSendMessage/>
         </Wrapper>
     )

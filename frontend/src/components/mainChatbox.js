@@ -1,13 +1,12 @@
 import tw from "tailwind-styled-components"
 import BoxFullChatbox from './boxFullchatbox'
-import BoxReceiver from "./boxReceiver"
 import BoxUserState from './boxUserstate'
 
-export default function MainChatbox ({ user, usuarios }) {
+export default function MainChatbox ({ usuarios }) {
     return(
         <Wrapper>
-            <BoxUserState user = { user } usuarios = { usuarios }/>
-            <BoxFullChatbox user = { user }/>
+            <BoxUserState usuarios = { usuarios }/>
+            <BoxFullChatbox/>
         </Wrapper>
     )
 }

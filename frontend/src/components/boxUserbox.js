@@ -14,6 +14,7 @@ export default function Userbox(props) {
         useEffect(() => {
             /*const box = document.getElementById("clearfix")
             box.addEventListener('click', colorBox)*/
+            console.log('Estos son los conectados', props.connectedUsers)
         }, [])
 
         return(

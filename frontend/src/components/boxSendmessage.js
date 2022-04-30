@@ -5,23 +5,28 @@ import { UserContext } from './context/currentUser'
 
 export default function BoxSendMessage () {
     const [msg, setMsg] = useState({})
-    const { currentUser } = useContext(UserContext)
+    const { currentUser, currentReceiver } = useContext(UserContext)
 
     const handleChange = (e) => {
         e.preventDefault()
-        const {message, value} = e.target
+        const {value} = e.target
         setMsg({ ...msg, 
             message: value,
-            sender: currentUser.name
+            sender: currentUser.name,
+            receiver: currentReceiver
         })
-        console.log(msg)
     }
 
     useEffect(()=>{
     console.log(currentUser, 'el current user desde Sendmessage')
     },[currentUser])
+    
     const sendMessage = async (e) => {
         e.preventDefault()
+        console.log('Este es el mensaje en sendMessage', msg)
+        setMsg({
+            ...msg,
+        })
         socket.emit('newmessage', msg)
     }
 
@@ -30,7 +35,7 @@ export default function BoxSendMessage () {
                 <div className="chat-message clearfix">
                     <div className="input-group mb-0">
                         <div className="input-group-prepend">
-                        <button onClick={sendMessage}><i className="fa fa-send"></i></button>
+                            <button onClick={sendMessage}><i className="fa fa-send"></i></button>
                         </div>
                         <input onChange={handleChange} id="chat-message" type="text" className="form-control" placeholder="Enter text here..."/>
                     </div>
