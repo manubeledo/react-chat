@@ -5,6 +5,8 @@ const cors = require('cors')
 require('dotenv').config();
 const PORT = process.env.PORT || 3001
 const { chatModel : db } = require('../backend/config/database/index')
+const { newChatModel : dbmsgs } = require('../backend/config/database/index')
+
 
 const server = http.createServer(app)
 const io = require('socket.io')(server, {
@@ -40,26 +42,26 @@ io.on('connection', socket => {
 
     console.log(`New connection ${socket.id}`)
 
-    socket.on('newuser', (usuario) => {
-        db.create({username: `${usuario.name}`})
+    socket.on('newuser', async (usuario) => {
+        await db.create({username: `${usuario.name}`}) // Crea el user en la base de datos.
         usuario.socket_id = socket.id
         users.push(usuario)
         io.emit('conectados', users)
     })
 
-    socket.on('newmessage', (msg) => {
+    socket.on('newmessage', async (msg) => {
         messages.push(msg)
-        console.log(messages)
+        console.log('Es es el sender y receiver', msg.sender, msg.receiver)
+        let dbmessages = await dbmsgs.find({
+            $or: [
+                {sender: `${msg.sender}`, receiver: `${msg.receiver}`}, 
+                {sender: `${msg.receiver}`, receiver: `${msg.sender}`} 
+                ]
+            })
+        await dbmsgs.create(msg) // Crea el mensaje en la base de datos. 
+        console.log('estos son los mensajes', dbmessages)
         io.emit('messages', messages)
     })
-
-    socket.on('new-user-message', (msg) => {
-        /*Buscar mensajes entre usuario 1 y usuario2 */
-        /*Asegurarse de que estan en orden */
-        /*Se emiten los mensajes */
-        io.emit('all-chat-messages', messages)
-    })
-
 
 })
 
