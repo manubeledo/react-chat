@@ -1,14 +1,23 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import tw from "tailwind-styled-components"
 import socket from "./socket"
+import { UserContext } from './context/currentUser'
 
 export default function BoxChatBox () {
 
     const [msgs, setMsgs] = useState([])
+    const { currentUser, currentReceiver } = useContext(UserContext)
 
+    // Tiene que mostrar solos los mensajes del user (currentReceiver) con el que se habla
+    // Se puede hacer un socket emit con el Receiver y un socket on con los mensajes de ese Receiver
     useEffect(() => {
-        socket.on('messages', allMessages => {
-            setMsgs(allMessages)
+        // let users = {
+        //     emiter: currentUser,
+        //     receiver: currentReceiver
+        // }
+        // socket.emit('askForMessages', users)
+        socket.on('p2pMessages', chatMessages => {
+            setMsgs(chatMessages)
         })
     }, [])
 
