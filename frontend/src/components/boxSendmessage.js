@@ -11,6 +11,7 @@ export default function BoxSendMessage () {
         e.preventDefault();
         const {value} = e.target;
         let time = new Date().toISOString();
+        console.log('Este es el USER LOG, y el CURRENT RECEIVER', currentUser, currentReceiver)
         setMsg({ ...msg, 
             message: value,
             sender: currentUser.name,

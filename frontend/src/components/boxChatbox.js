@@ -4,30 +4,33 @@ import socket from "./socket"
 import { UserContext } from './context/currentUser'
 
 export default function BoxChatBox () {
-
+    const [firstRender, setFirstRender] = useState(false)
     const [msgs, setMsgs] = useState([])
     const { currentUser, currentReceiver } = useContext(UserContext)
 
-    // Tiene que mostrar solos los mensajes del user (currentReceiver) con el que se habla
-    // Se puede hacer un socket emit con el Receiver y un socket on con los mensajes de ese Receiver
     useEffect(() => {
-        // let users = {
-        //     emiter: currentUser,
-        //     receiver: currentReceiver
-        // }
-        // socket.emit('askForMessages', users)
-        socket.on('p2pMessages', chatMessages => {
+        socket.on('loadmsgs', chatMessages => {
             setMsgs(chatMessages)
         })
-    }, [])
+    }, [setMsgs])
+    
+    useEffect(()=>{
+        if(!firstRender) 
+        socket.on('currentChat', chatMessages => {
+            console.log('Se renderizaron los mensajes de la db')
+            setMsgs(chatMessages)
+            setFirstRender(true)
+        })
+    }, [msgs])
 
     return(
         <Wrapper>
-            {msgs.map(({...msgs}, index) => (
+            {msgs.map(({...msgs}, index) => ((msgs.receiver == currentReceiver && msgs.sender == currentUser.name) || (msgs.sender == currentReceiver && msgs.receiver == currentUser.name)) ? (
                 <div key={index}>
                 <h2>{msgs.message}</h2>
+                <h6 style={{color: 'red'}}>{msgs.sender}</h6>
                 </div>
-            ))}
+            ) : <></>)}
         </Wrapper>
     )
 }
