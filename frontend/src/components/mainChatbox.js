@@ -3,6 +3,12 @@ import BoxFullChatbox from './boxFullchatbox'
 import BoxUserState from './boxUserstate'
 
 export default function MainChatbox ({ usuarios }) {
+    // useEffect(()=>{
+    //     const isClosed = window.closed()
+    //     if(isClosed){
+    //         socket.disconnect()
+    //     }
+    // },[])
     return(
         <Wrapper>
             <BoxUserState usuarios = { usuarios }/>
