@@ -6,9 +6,6 @@ export default function UserContextLogic(props) {
     const [currentUser, setCurrentUser] = useState({})
     const [currentReceiver, setCurrentReceiver] = useState({})
 
-    useEffect(()=>{
-        console.log('user desde el context', currentUser)
-    }, [currentUser])
     return <UserContext.Provider value={{ currentUser, setCurrentUser, currentReceiver, setCurrentReceiver }}>
         {props.children}
     </UserContext.Provider>

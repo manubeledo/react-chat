@@ -1,9 +1,14 @@
-import {useEffect, useContext} from 'react'
+import {useEffect, useContext, useState} from 'react'
 import { UserContext } from './context/currentUser'
+import socket from "./socket"
 
 export default function Conectados (props) {
     
-    const { setCurrentReceiver, currentReceiver } = useContext(UserContext)
+    const { setCurrentReceiver, currentReceiver, currentUser } = useContext(UserContext)
+    const [ chattingUsers, setChattingUsers ] = useState({
+        sender: '',
+        receiver: ''
+    })
 
     function colorBox(e) {
         const selectedUser = document.querySelector('.selected-user')
@@ -17,21 +22,33 @@ export default function Conectados (props) {
         }
     }
 
+    function updateMessages () {
+        socket.emit('currentChattingUsers', chattingUsers)
+    }
+
     useEffect(() => {
-        console.log('Este es el currentReceiver', currentReceiver)
+        let updatedValue = {
+            sender: currentUser.name,
+            receiver: currentReceiver
+        }
+        setChattingUsers(updatedValue)
     }, [currentReceiver])
+
+    useEffect(() => {
+        updateMessages()
+    }, [chattingUsers])
 
     return(
         <>
-         {props.data.map(({...props}) => (
+         {props.data.map(({...props}) => props.name !== currentUser.name ? (
               <li onClick={colorBox} className="clearfix" id={props.name} key={props.socket_id}>
               <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar"/>
               <div className="about">
                       <p className="name">{props.name}</p>
                   <div className="status"> <i className="fa fa-circle offline"></i> left 7 mins ago </div>                                            
               </div>
-          </li>
-        ))} 
+              </li> 
+        )  : <></> )}
         </>
     )
 }

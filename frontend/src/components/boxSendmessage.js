@@ -8,12 +8,16 @@ export default function BoxSendMessage () {
     const { currentUser, currentReceiver } = useContext(UserContext)
 
     const handleChange = (e) => {
-        e.preventDefault()
-        const {value} = e.target
+        e.preventDefault();
+        const {value} = e.target;
+        let time = new Date().toISOString();
+        console.log('Este es el USER LOG, y el CURRENT RECEIVER', currentUser, currentReceiver)
         setMsg({ ...msg, 
             message: value,
             sender: currentUser.name,
-            receiver: currentReceiver
+            receiver: currentReceiver,
+            timestamp: time,
+            chatID: 11111
         })
     }
 
