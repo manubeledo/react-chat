@@ -52,8 +52,6 @@ io.on('connection', socket => {
     })
 
     socket.on('currentChattingUsers', async (usersFromClient) => {
-        console.log(usersFromClient, 'los current chatting users en el socket backend')
-
         let dbUsersMessages = await dbmsgs.find({
             $or: [
                 {sender: `${usersFromClient.sender}`, receiver: `${usersFromClient.receiver}`}, 
@@ -66,6 +64,12 @@ io.on('connection', socket => {
 
         io.to(socketA).emit('currentChat', dbUsersMessages);
         io.to(socketB).emit('currentChat', dbUsersMessages);
+    })
+
+    socket.on('disconnect', ()=> {
+        let socket_id = socket.id
+        users = users.filter(el => el.socket_id !== socket_id)
+        io.emit('conectados', users)
     })
 
     socket.on('newmessage', async (msg) => {
