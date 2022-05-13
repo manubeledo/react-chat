@@ -1,14 +1,15 @@
 import tw from "tailwind-styled-components"
 import BoxFullChatbox from './boxFullchatbox'
 import BoxUserState from './boxUserstate'
+import { useEffect } from "react"
 
 export default function MainChatbox ({ usuarios }) {
-    // useEffect(()=>{
-    //     const isClosed = window.closed()
-    //     if(isClosed){
-    //         socket.disconnect()
-    //     }
-    // },[])
+     /*useEffect(()=>{
+         const isClosed = window.closed()
+         if(isClosed){
+             socket.disconnect()
+         }
+    },[])*/
     return(
         <Wrapper>
             <BoxUserState usuarios = { usuarios }/>
