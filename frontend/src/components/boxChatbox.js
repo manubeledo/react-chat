@@ -9,10 +9,12 @@ export default function BoxChatBox () {
     const { currentUser, currentReceiver } = useContext(UserContext)
 
     useEffect(() => {
-        socket.on('loadmsgs', chatMessages => {
-            setMsgs(chatMessages)
+        socket.on('loadmsgs', msg => {
+            console.log('esto es msg', msg)
+            setMsgs([...msgs, msg])
+            console.log(msgs, 'estado de mensajes')
         })
-    }, [setMsgs])
+    }, [msgs])
     
     useEffect(()=>{
         if(!firstRender) 
@@ -26,15 +28,25 @@ export default function BoxChatBox () {
     return(
         <Wrapper>
             {msgs.map(({...msgs}, index) => ((msgs.receiver == currentReceiver && msgs.sender == currentUser.name) || (msgs.sender == currentReceiver && msgs.receiver == currentUser.name)) ? (
-                <div key={index}>
-                <h2>{msgs.message}</h2>
-                <h6 style={{color: 'red'}}>{msgs.sender}</h6>
-                </div>
-            ) : <></>)}
+                ((msgs.receiver == currentReceiver) ?
+                <>
+                    <div className="leftMessage" key={index}>
+                        <p style={{fontWeight: 'normal'}}>{msgs.message}</p>
+                        <p style={{fontSize: '12px'}}>{msgs.timestamp.slice(11,19)}</p>
+                    </div>
+                </> 
+                : 
+                <>
+                    <div className="rightMessage" key={index}>
+                        <p style={{fontWeight: 'normal'}}>{msgs.message}</p>
+                        <p style={{fontSize: '12px'}}>{msgs.timestamp.slice(11,19)}</p>
+                    </div>
+                </>))
+             : <></>)}
         </Wrapper>
     )
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold underline border-solid border-green-400 border-4 bg-gray-300 w-full h-4/6 text-center
+text-3xl font-bold bg-gray-300 w-full h-110 text-center flex flex-col overflow-auto
 `

@@ -1,13 +1,23 @@
 import tw from "tailwind-styled-components"
+import { useContext, useEffect } from "react"
+import { UserContext } from './context/currentUser'
 
 export default function BoxReceiver () {
+    const { currentReceiver } = useContext(UserContext)
+    /*const { receiver, setReceiver } = useState('Not Receiver selected')
+    useEffect(()=>{
+
+    }, [currentReceiver])*/
     return(
         <Wrapper>
-                <h6>BoxReceiver</h6>
+                <div class="receiverAvatarDiv">
+                    <img class="receiverAvatar" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar"/> 
+                    <b style={{display: 'inline'}}>Not Receiver found</b>  
+                </div>
         </Wrapper>
     )
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold underline border-solid border-red-400 border-4 bg-gray-300 w-full h-1/6 text-center
+text-3xl font-bold w-full h-1/12 text-center p=4
 `

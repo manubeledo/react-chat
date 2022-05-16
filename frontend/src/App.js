@@ -5,6 +5,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import socket from './components/socket';
 import './App.css';
 import './Login.css';
+import './css/chatstyles.css';
+
 
 function App() {
   socket.emit('conectado', "hola desde cliente")

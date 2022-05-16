@@ -74,18 +74,10 @@ io.on('connection', socket => {
 
     socket.on('newmessage', async (msg) => {
         messages.push(msg)
+        io.emit('loadmsgs', msg)
         console.log('Es es el sender y receiver', msg.sender, msg.receiver)
-        await dbmsgs.create(msg) // Crea el mensaje en la base de datos. 
-        let dbmessages = await dbmsgs.find({
-            $or: [
-                {sender: `${msg.sender}`, receiver: `${msg.receiver}`}, 
-                {sender: `${msg.receiver}`, receiver: `${msg.sender}`} 
-                ]
-            })
-        console.log('estos son los mensajes', dbmessages)
-        io.emit('loadmsgs', dbmessages)
+        await dbmsgs.create(msg)
     })
-
 })
 
 server.listen(PORT, () => {
