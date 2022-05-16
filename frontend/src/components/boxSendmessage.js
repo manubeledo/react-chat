@@ -8,12 +8,16 @@ export default function BoxSendMessage () {
     const { currentUser, currentReceiver } = useContext(UserContext)
 
     const handleChange = (e) => {
-        e.preventDefault()
-        const {value} = e.target
+        e.preventDefault();
+        const {value} = e.target;
+        let time = new Date().toISOString();
+        console.log('Este es el USER LOG, y el CURRENT RECEIVER', currentUser, currentReceiver)
         setMsg({ ...msg, 
             message: value,
             sender: currentUser.name,
-            receiver: currentReceiver
+            receiver: currentReceiver,
+            timestamp: time,
+            chatID: 11111
         })
     }
 
@@ -32,10 +36,10 @@ export default function BoxSendMessage () {
 
     return(
         <Wrapper>
-                <div className="chat-message clearfix">
+                <div className="chat-message">
                     <div className="input-group mb-0">
                         <div className="input-group-prepend">
-                            <button onClick={sendMessage}><i className="fa fa-send"></i></button>
+                            <button onClick={sendMessage} className="btn-message"><i className="fa fa-send"></i></button>
                         </div>
                         <input onChange={handleChange} id="chat-message" type="text" className="form-control" placeholder="Enter text here..."/>
                     </div>
@@ -45,5 +49,5 @@ export default function BoxSendMessage () {
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold underline border-solid border-green-400 border-4 bg-gray-300 w-full h-1/6 text-center
+text-3xl font-bold w-full h-1/12 text-center p-4 mt-20
 `

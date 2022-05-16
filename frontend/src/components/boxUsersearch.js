@@ -3,7 +3,6 @@ import tw from "tailwind-styled-components"
 export default function BoxUserSearch () {
     return(
         <Wrapper>
-            <h6>BoxUserSearch</h6>
             <div className="input-group">
                 <div className="input-group-prepend">
                     <span className="input-group-text"><i className="fa fa-search"></i></span>
@@ -15,5 +14,5 @@ export default function BoxUserSearch () {
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold underline border-solid border-green-400 border-4 bg-gray-300 w-full h-1/6 text-center
+text-3xl font-bold bg-left-dark w-full h-1/12 p-4 border-1 rounded-tl-lg
 `

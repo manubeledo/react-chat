@@ -5,6 +5,8 @@ const cors = require('cors')
 require('dotenv').config();
 const PORT = process.env.PORT || 3001
 const { chatModel : db } = require('../backend/config/database/index')
+const { newChatModel : dbmsgs } = require('../backend/config/database/index')
+
 
 const server = http.createServer(app)
 const io = require('socket.io')(server, {
@@ -34,33 +36,48 @@ app.use(cors(corsConfig))
 app.get('/', (req, res) => res.send('En la raiz del server'))
 
 let users = []
+let usersID = {}
 let messages = []
 
 io.on('connection', socket => {
 
     console.log(`New connection ${socket.id}`)
 
-    socket.on('newuser', (usuario) => {
-        db.create({username: `${usuario.name}`})
+    socket.on('newuser', async (usuario) => {
+        await db.create({username: `${usuario.name}`}) // Crea el user en la base de datos.
         usuario.socket_id = socket.id
         users.push(usuario)
+        usersID[usuario.name] = socket.id
         io.emit('conectados', users)
     })
 
-    socket.on('newmessage', (msg) => {
+    socket.on('currentChattingUsers', async (usersFromClient) => {
+        let dbUsersMessages = await dbmsgs.find({
+            $or: [
+                {sender: `${usersFromClient.sender}`, receiver: `${usersFromClient.receiver}`}, 
+                {sender: `${usersFromClient.receiver}`, receiver: `${usersFromClient.sender}`} 
+                ]
+            })
+
+        let socketA = usersID[usersFromClient.sender]
+        let socketB = usersID[usersFromClient.receiver]
+
+        io.to(socketA).emit('currentChat', dbUsersMessages);
+        io.to(socketB).emit('currentChat', dbUsersMessages);
+    })
+
+    socket.on('disconnect', ()=> {
+        let socket_id = socket.id
+        users = users.filter(el => el.socket_id !== socket_id)
+        io.emit('conectados', users)
+    })
+
+    socket.on('newmessage', async (msg) => {
         messages.push(msg)
-        console.log(messages)
-        io.emit('messages', messages)
+        io.emit('loadmsgs', msg)
+        console.log('Es es el sender y receiver', msg.sender, msg.receiver)
+        await dbmsgs.create(msg)
     })
-
-    socket.on('new-user-message', (msg) => {
-        /*Buscar mensajes entre usuario 1 y usuario2 */
-        /*Asegurarse de que estan en orden */
-        /*Se emiten los mensajes */
-        io.emit('all-chat-messages', messages)
-    })
-
-
 })
 
 server.listen(PORT, () => {
