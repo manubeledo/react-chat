@@ -12,7 +12,7 @@ export default function BoxReceiver () {
         <Wrapper>
                 <div class="receiverAvatarDiv">
                     <img class="receiverAvatar" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar"/> 
-                    <b style={{display: 'inline'}}>Not Receiver found</b>  
+                    <b style={{display: 'inline'}}>{currentReceiver.length > 0 ? currentReceiver : 'Welcome to the chat!'}</b>  
                 </div>
         </Wrapper>
     )
