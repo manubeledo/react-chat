@@ -49,5 +49,5 @@ export default function BoxSendMessage () {
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold w-full h-1/12 text-center p-4 mt-20
+text-3xl font-bold w-full h-1/12 text-center p-4 bg-left-dark
 `
