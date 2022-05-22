@@ -13,5 +13,5 @@ export default function MainChatbox ({ usuarios }) {
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold mr-40 ml-40 h-128 bg-background-chat flex flex-row justify-start my-28 border-1 rounded-xl
+text-3xl font-bold mr-80 ml-80 mt-10 mb-10 h-128 bg-background-chat flex flex-row justify-start
 `

@@ -31,15 +31,15 @@ export default function BoxChatBox () {
                 ((msgs.receiver == currentReceiver) ?
                 <>
                     <div className="leftMessage" key={index}>
-                        <p style={{fontWeight: 'normal'}}>{msgs.message}</p>
-                        <p style={{fontSize: '12px'}}>{msgs.timestamp.slice(11,19)}</p>
+                        <p className="message_p" style={{fontWeight: 'normal'}}>{msgs.message}</p>
+                        <p className="timestamp_p" style={{textAlign: "end"}}>{msgs.timestamp.slice(11,16)}</p>
                     </div>
                 </> 
                 : 
                 <>
                     <div className="rightMessage" key={index}>
-                        <p style={{fontWeight: 'normal'}}>{msgs.message}</p>
-                        <p style={{fontSize: '12px'}}>{msgs.timestamp.slice(11,19)}</p>
+                        <p className="message_p" style={{fontWeight: 'normal'}}>{msgs.message}</p>
+                        <p className="timestamp_p" style={{textAlign: "end"}}>{msgs.timestamp.slice(11,16)}</p>
                     </div>
                 </>))
              : <></>)}
@@ -48,5 +48,5 @@ export default function BoxChatBox () {
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold bg-gray-300 w-full h-110 text-center flex flex-col overflow-auto
+text-3xl font-bold bg-gray-300 w-full h-110 text-center flex flex-col overflow-auto pt-8
 `

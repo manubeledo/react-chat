@@ -4,10 +4,7 @@ import { UserContext } from './context/currentUser'
 
 export default function BoxReceiver () {
     const { currentReceiver } = useContext(UserContext)
-    /*const { receiver, setReceiver } = useState('Not Receiver selected')
-    useEffect(()=>{
 
-    }, [currentReceiver])*/
     return(
         <Wrapper>
                 <div class="receiverAvatarDiv">
@@ -19,5 +16,5 @@ export default function BoxReceiver () {
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold w-full h-1/12 text-center p=4
+text-3xl font-bold w-full h-1/12 p=4 text-left
 `

@@ -14,5 +14,5 @@ export default function BoxUserSearch () {
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold bg-left-dark w-full h-1/12 p-4 border-1 rounded-tl-lg
+text-3xl font-bold bg-left-dark w-full h-10 p-3 rounded-tl-lg
 `
