@@ -1,4 +1,5 @@
 import {useEffect, useContext, useState} from 'react'
+import tw from "tailwind-styled-components"
 import { UserContext } from './context/currentUser'
 import socket from "./socket"
 
@@ -39,7 +40,7 @@ export default function Conectados (props) {
     }, [chattingUsers])
 
     return(
-        <>
+        <Wrapper>
          {props.data.map(({...props}) => props.name !== currentUser.name ? (
               <li onClick={colorBox} className="clearfix" id={props.name} key={props.socket_id}>
               <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar"/>
@@ -49,6 +50,10 @@ export default function Conectados (props) {
               </div>
               </li> 
         )  : <></> )}
-        </>
+        </Wrapper>
     )
 }
+
+const Wrapper = tw.div `
+text-3xl font-bold bg-left-dark text-center rounded-l-lg overflow-auto h-52
+`
