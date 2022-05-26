@@ -70,7 +70,8 @@ p {
 
 .people-list .chat-list li:hover {
     transition: .2s;
-    border: 2px solid #665DFE;
+    background-color: #564dfd;
+    opacity: 0.4;
     cursor: pointer
 }
 
@@ -417,4 +418,10 @@ p {
 .message_p {
     font-size: medium;
     flex-grow: 2;
+}
+
+.name {
+    margin-right: 80px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
 }

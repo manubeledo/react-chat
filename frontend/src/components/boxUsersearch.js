@@ -1,13 +1,20 @@
+import { useState } from "react"
 import tw from "tailwind-styled-components"
 
-export default function BoxUserSearch () {
+export default function BoxUserSearch ({text, setText}) {
+
+    const handleInputChange = ({target}) => {
+        setText(target.value)
+        console.log(text)
+    }
+
     return(
         <Wrapper>
             <div className="input-group">
                 <div className="input-group-prepend">
                     <span className="input-group-text"><i className="fa fa-search"></i></span>
                 </div>
-                <input type="text" className="form-control" placeholder="Search..."/>
+                <input type="text" className="form-control" placeholder="Search user..." value={text} onChange={handleInputChange}/>
             </div>
         </Wrapper>
     )
