@@ -27,7 +27,7 @@ export default function BoxChatBox () {
 
     return(
         <Wrapper>
-            {msgs.map(({...msgs}, index) => ((msgs.receiver == currentReceiver && msgs.sender == currentUser.name) || (msgs.sender == currentReceiver && msgs.receiver == currentUser.name)) ? (
+            {msgs.map(({...msgs}, index) => ((msgs.receiver == currentReceiver && msgs.sender == currentUser.username) || (msgs.sender == currentReceiver && msgs.receiver == currentUser.username)) ? (
                 ((msgs.receiver == currentReceiver) ?
                 <>
                     <div className="leftMessage" key={index}>

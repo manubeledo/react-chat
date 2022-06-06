@@ -9,6 +9,7 @@ import { UserContext } from './context/currentUser'
 export default function BoxUserState ({ usuarios }) {
 
     const [conectados, setConectados] = useState([]);
+    const [text, setText] = useState('');
     const { currentUser } = useContext(UserContext)
 
     useEffect(()=>{
@@ -17,14 +18,15 @@ export default function BoxUserState ({ usuarios }) {
     
     useEffect(()=>{
         socket.on('conectados', users => {  
+            console.log(users)
             setConectados(users)
         })
     }, [])
 
     return(
         <Wrapper>
-            <BoxUserSearch/>
-            <BoxUserbox connectedUsers={conectados} user={ currentUser } usuarios = { usuarios }/>
+            <BoxUserSearch text={text} setText={setText}/>
+            <BoxUserbox text={text} setText={setText} connectedUsers={conectados} user={ currentUser } usuarios = { usuarios }/>
         </Wrapper>
     )
 }
