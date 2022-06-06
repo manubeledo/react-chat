@@ -13,7 +13,8 @@ export default function SetUserLogic () {
   const handleChange = (e) => {
       e.preventDefault()
       const {name, value} = e.target
-      setCurrentUser({ ...currentUser, name: value})
+      setCurrentUser({ ...currentUser, [name]: value})
+      console.log(currentUser)
   }
 
   const registrar = (e) => {
@@ -26,6 +27,7 @@ export default function SetUserLogic () {
     e.preventDefault()
     registrar()
     socket.on('conectados', users => {  
+      //console.log(users)
       setUsuarios(users)
     })
 

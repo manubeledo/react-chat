@@ -11,7 +11,7 @@ export default function Userbox(props) {
             pencil.style.visibility = 'hidden'
         }
 
-        const usersFilter = props.connectedUsers.filter(user => user.name.toLowerCase().includes(props.text.toLocaleLowerCase()))
+        const usersFilter = props.connectedUsers.filter(user => user.username.toLowerCase().includes(props.text.toLocaleLowerCase()))
 
         return(
             <Wrapper>
@@ -21,7 +21,7 @@ export default function Userbox(props) {
                     <i className="fa-solid fa-pencil pencil"></i>
                 </div>
                 <div className="connected_me">
-                    <p> {props.user.name} </p>                                           
+                    <p> {props.user.username} </p>                                           
                 </div>
             </div>
             <div id="plist" className="people-list">

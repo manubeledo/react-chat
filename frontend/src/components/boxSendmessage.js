@@ -14,7 +14,7 @@ export default function BoxSendMessage () {
         console.log('Este es el USER LOG, y el CURRENT RECEIVER', currentUser, currentReceiver)
         setMsg({ ...msg, 
             message: value,
-            sender: currentUser.name,
+            sender: currentUser.username,
             receiver: currentReceiver,
             timestamp: time,
             chatID: 11111

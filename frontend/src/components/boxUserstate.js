@@ -18,6 +18,7 @@ export default function BoxUserState ({ usuarios }) {
     
     useEffect(()=>{
         socket.on('conectados', users => {  
+            console.log(users)
             setConectados(users)
         })
     }, [])

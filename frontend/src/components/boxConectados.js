@@ -11,6 +11,8 @@ export default function Conectados (props) {
         receiver: ''
     })
 
+    console.log(props.data)
+
     function colorBox(e) {
         const selectedUser = document.querySelector('.selected-user')
         if(selectedUser){
@@ -29,7 +31,7 @@ export default function Conectados (props) {
 
     useEffect(() => {
         let updatedValue = {
-            sender: currentUser.name,
+            sender: currentUser.username,
             receiver: currentReceiver
         }
         setChattingUsers(updatedValue)
@@ -41,11 +43,11 @@ export default function Conectados (props) {
 
     return(
         <Wrapper>
-         {props.data.map(({...props}) => props.name !== currentUser.name ? (
-              <li onClick={colorBox} className="clearfix" id={props.name} key={props.socket_id}>
+         {props.data.map(({...props}) => props.username !== currentUser.username ? (
+              <li onClick={colorBox} className="clearfix" id={props.username} key={props.socket_id}>
               <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar"/>
               <div className="about">
-                      <p className="name">{props.name}</p>
+                      <p className="name">{props.username}</p>
                   <div className="status"> <i className="fa fa-circle offline"></i> left 7 mins ago </div>                                            
               </div>
               </li> 

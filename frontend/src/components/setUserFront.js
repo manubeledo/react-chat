@@ -8,10 +8,10 @@ export default function SetUserFront (props) {
         <form onSubmit={props.sendData}>
 
         <label>Username</label>
-        <input onChange={props.handleChange} type="text" placeholder="Email or Phone" id="username"/>
+        <input onChange={props.handleChange} type="text" name="username" placeholder="Email or Phone" id="username"/>
 
         <label>Password</label>
-        <input type="password" placeholder="Password" id="password"/>
+        <input onChange={props.handleChange} type="password" name="pswd" placeholder="Password" id="password"/>
 
         <button>Log In</button>
         <div className="social">
