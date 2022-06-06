@@ -1,11 +1,14 @@
+require('dotenv').config();
 const express = require('express')
 const app = express()
 const http = require('http')
 const cors = require('cors')
-require('dotenv').config();
+
 const PORT = process.env.PORT || 3001
+
 const { chatModel : db } = require('../backend/config/database/index')
 const { newChatModel : dbmsgs } = require('../backend/config/database/index')
+const socketConfig = require('./sockets_config/index')
 
 
 const server = http.createServer(app)
@@ -32,10 +35,11 @@ let corsConfig = {
     credentials: true
 }
 app.use(cors(corsConfig))
-
 app.get('/', (req, res) => res.send('En la raiz del server'))
 
-let users = []
+socketConfig(io, db, dbmsgs)
+
+/*let users = []
 let usersID = {}
 let messages = []
 
@@ -78,7 +82,7 @@ io.on('connection', socket => {
         console.log('Es es el sender y receiver', msg.sender, msg.receiver)
         await dbmsgs.create(msg)
     })
-})
+})*/
 
 server.listen(PORT, () => {
     console.log(`Servidor funcionando en http://localhost:${PORT}`)
