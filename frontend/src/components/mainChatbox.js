@@ -3,10 +3,10 @@ import BoxFullChatbox from './boxFullchatbox'
 import BoxUserState from './boxUserstate'
 import { useEffect } from "react"
 
-export default function MainChatbox ({ usuarios }) {
+export default function MainChatbox () {
     return(
         <Wrapper>
-            <BoxUserState usuarios = { usuarios }/>
+            <BoxUserState /*usuarios={usuarios}*//>
             <BoxFullChatbox/>
         </Wrapper>
     )

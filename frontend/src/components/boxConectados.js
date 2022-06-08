@@ -11,8 +11,6 @@ export default function Conectados (props) {
         receiver: ''
     })
 
-    console.log(props.data)
-
     function colorBox(e) {
         const selectedUser = document.querySelector('.selected-user')
         if(selectedUser){
