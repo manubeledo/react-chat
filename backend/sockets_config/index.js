@@ -14,11 +14,12 @@ io.on('connection', socket => {
         }) 
         usuario.socket_id = socket.id
         users.push(usuario)
-        usersID[usuario.name] = socket.id
+        usersID[usuario.username] = socket.id
         io.emit('conectados', users)
     })
 
     socket.on('currentChattingUsers', async (usersFromClient) => {
+
         let dbUsersMessages = await dbmsgs.find({
             $or: [
                 {sender: `${usersFromClient.sender}`, receiver: `${usersFromClient.receiver}`}, 
@@ -42,7 +43,6 @@ io.on('connection', socket => {
     socket.on('newmessage', async (msg) => {
         messages.push(msg)
         io.emit('loadmsgs', msg)
-        //console.log('Es es el sender y receiver', msg.sender, msg.receiver)
         await dbmsgs.create(msg)
     })
 })
