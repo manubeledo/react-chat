@@ -3,12 +3,16 @@ const express = require('express')
 const app = express()
 const http = require('http')
 const cors = require('cors')
+const session = require('express-session')
 
 const PORT = process.env.PORT || 3001
 
 const { chatModel : db } = require('../backend/config/database/index')
 const { newChatModel : dbmsgs } = require('../backend/config/database/index')
 const socketConfig = require('./sockets_config/index')
+
+const { authAccount, verifyJwt} = require('./utils/auth/index')
+
 
 
 const server = http.createServer(app)
@@ -23,6 +27,16 @@ const io = require('socket.io')(server, {
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(session({
+    key: 'userId',
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 60 * 60 * 24
+    }
+}))
+
 let whitelist = ['http://localhost:3000']
 let corsConfig = {
     origin: function(origin, callback) {
@@ -35,9 +49,17 @@ let corsConfig = {
     credentials: true
 }
 app.use(cors(corsConfig))
+
 app.get('/', (req, res) => res.send('En la raiz del server'))
 
 socketConfig(io, db, dbmsgs)
+
+app.post('/login', authAccount, (req, res)=>{
+
+})
+app.get('/authLogin', verifyJwt, (req, res)=>{
+
+})
 
 server.listen(PORT, () => {
     console.log(`Servidor funcionando en http://localhost:${PORT}`)
