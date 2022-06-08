@@ -10,19 +10,18 @@ export default function BoxChatBox () {
 
     useEffect(() => {
         socket.on('loadmsgs', msg => {
-            console.log('esto es msg', msg)
             setMsgs([...msgs, msg])
-            console.log(msgs, 'estado de mensajes')
         })
     }, [msgs])
     
     useEffect(()=>{
-        if(!firstRender) 
-        socket.on('currentChat', chatMessages => {
-            console.log('Se renderizaron los mensajes de la db')
-            setMsgs(chatMessages)
-            setFirstRender(true)
-        })
+        if(!firstRender){
+            console.log('estoy adentro del if')
+            socket.on('currentChat', chatMessages => {
+                setMsgs(chatMessages)
+                setFirstRender(true)
+            })
+        }
     }, [msgs])
 
     return(
