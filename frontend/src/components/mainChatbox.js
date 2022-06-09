@@ -6,7 +6,7 @@ import { useEffect } from "react"
 export default function MainChatbox () {
     return(
         <Wrapper>
-            <BoxUserState /*usuarios={usuarios}*//>
+            <BoxUserState/>
             <BoxFullChatbox/>
         </Wrapper>
     )

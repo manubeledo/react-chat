@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from 'react'
 import socket from './socket';
 import MainChatbox from "./mainChatbox";
 import { UserContext } from './context/currentUser'
+import Axios from 'axios'
 
 export default function SetUserLogic () {
     const [user, setUser] = useState({})
@@ -27,20 +28,19 @@ export default function SetUserLogic () {
 
   const sendData = async (e) => {
     e.preventDefault()
-    /*let response = await fetch('http://localhost:5000/login', {
-        method: 'POST',
-        body: JSON.stringify(login),
-        headers: {'Content-Type': 'application/json'},
-        credentials: 'include',
-    })
-
-    const data = await response.json()
-    console.log(data)*/
+    /*Axios.post('http://localhost:5000/login', {
+      data: {...login}
+    }).then((response) => {
+      console.log(response.data)
+      localStorage.setItem('token', response.data.token)
+      setCurrentUser(response.data.user)
+    })*/
+ 
     registrar()
   }
     return(
       <>
-      {registrado == true ? <MainChatbox user={currentUser} /*usuarios={usuarios}*//> : <SetUserFront handleChange={handleChange} sendData={sendData}/>}
+      {registrado == true ? <MainChatbox user={currentUser}/> : <SetUserFront handleChange={handleChange} sendData={sendData}/>}
       </>
     )
 }

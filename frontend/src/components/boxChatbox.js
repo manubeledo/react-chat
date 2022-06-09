@@ -16,7 +16,6 @@ export default function BoxChatBox () {
     
     useEffect(()=>{
         if(!firstRender){
-            console.log('estoy adentro del if')
             socket.on('currentChat', chatMessages => {
                 setMsgs(chatMessages)
                 setFirstRender(true)

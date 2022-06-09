@@ -28,7 +28,7 @@ function verifyJwt (req, res, next) {
 }
 
 const authAccount = async (req, res, next) => {
-    const user = req.body
+    const user = req.body.data
     console.log(user)
     try {
         const userExists = await db.findOne({username: `${user.username}`})
@@ -50,7 +50,7 @@ const authAccount = async (req, res, next) => {
                     token: token,
                     user: userExists
                 })
-                res.redirect('/authLogin')
+                //res.redirect('/authLogin')
             }else{
                 return 'El username es valido, pero la conrtaseña no...'
             }

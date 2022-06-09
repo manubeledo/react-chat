@@ -1,3 +1,4 @@
+import Axios from "axios";
 import { useState, createContext } from "react";
 
 export const UserContext = createContext([])
@@ -9,7 +10,17 @@ export default function UserContextLogic(props) {
     })
     const [currentReceiver, setCurrentReceiver] = useState({})
 
-    return <UserContext.Provider value={{ currentUser, setCurrentUser, currentReceiver, setCurrentReceiver }}>
+    const getUser =  () => {
+          Axios.get('http://localhost:5000/authLogin', {
+            headers: {
+                "x-access-token": localStorage.getItem('token')
+            },
+        }).then(response => {
+            console.log(response)
+        })
+    }
+
+    return <UserContext.Provider value={{ currentUser, setCurrentUser, currentReceiver, setCurrentReceiver, getUser }}>
         {props.children}
     </UserContext.Provider>
 }
