@@ -21,9 +21,9 @@ export default function BoxSendMessage () {
         })
     }
 
-    useEffect(()=>{
+    /*useEffect(()=>{
     console.log(currentUser, 'el current user desde Sendmessage')
-    },[currentUser])
+    },[currentUser])*/
     
     const sendMessage = async (e) => {
         e.preventDefault()

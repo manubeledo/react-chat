@@ -54,12 +54,8 @@ app.get('/', (req, res) => res.send('En la raiz del server'))
 
 socketConfig(io, db, dbmsgs)
 
-app.post('/login', authAccount, (req, res)=>{
-
-})
-app.get('/authLogin', verifyJwt, (req, res)=>{
-
-})
+app.post('/login', authAccount, (req, res)=>{})
+app.get('/authLogin', verifyJwt, (req, res)=>{})
 
 server.listen(PORT, () => {
     console.log(`Servidor funcionando en http://localhost:${PORT}`)

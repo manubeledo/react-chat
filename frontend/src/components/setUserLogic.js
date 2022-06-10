@@ -9,15 +9,15 @@ export default function SetUserLogic () {
     const [user, setUser] = useState({})
     const [registrado, setRegistrado] = useState(false);
     const { setCurrentUser, currentUser } = useContext(UserContext)
-    //const [login, setLogin] = useState({})
+    const [login, setLogin] = useState({})
 
   const handleChange = (e) => {
       e.preventDefault()
       const {name, value} = e.target
-      setCurrentUser({ ...currentUser, [name]: value})
-      console.log(currentUser)
-      /*setLogin({ ...login, [name]: value})
-      console.log(login)*/
+      /*setCurrentUser({ ...currentUser, [name]: value})
+      console.log(currentUser)*/
+      setLogin({ ...login, [name]: value})
+      console.log(login)
   }
 
   const registrar = (e) => {
@@ -28,14 +28,14 @@ export default function SetUserLogic () {
 
   const sendData = async (e) => {
     e.preventDefault()
-    /*Axios.post('http://localhost:5000/login', {
+    await Axios.post('http://localhost:5000/login', {
       data: {...login}
     }).then((response) => {
       console.log(response.data)
       localStorage.setItem('token', response.data.token)
       setCurrentUser(response.data.user)
-    })*/
- 
+    })
+
     registrar()
   }
     return(
