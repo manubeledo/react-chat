@@ -10,14 +10,18 @@ export default function UserContextLogic(props) {
     })
     const [currentReceiver, setCurrentReceiver] = useState({})
 
-    const getUser =  () => {
-          Axios.get('http://localhost:5000/authLogin', {
-            headers: {
-                "x-access-token": localStorage.getItem('token')
-            },
-        }).then(response => {
-            console.log(response)
-        })
+    const getUser = async () => {
+        try {
+            console.log('entre')
+            await Axios.get('http://localhost:5000/authLogin', {
+                headers: {"x-access-token": localStorage.getItem('token')}
+            }).then((response) => {
+                console.log(response, 'la respuesta')
+            })
+        } catch (error) {
+            console.log(error,'NO pude darle al Get en getUser()')
+        }
+
     }
 
     return <UserContext.Provider value={{ currentUser, setCurrentUser, currentReceiver, setCurrentReceiver, getUser }}>

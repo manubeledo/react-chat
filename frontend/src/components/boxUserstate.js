@@ -9,9 +9,10 @@ import { UserContext } from './context/currentUser'
 export default function BoxUserState ({ usuarios }) {
     const [conectados, setConectados] = useState([]);
     const [text, setText] = useState('');
-    const { currentUser } = useContext(UserContext)
+    const { currentUser, getUser } = useContext(UserContext)
 
     useEffect(()=>{
+        getUser()
         socket.emit("newuser", currentUser);
     },[])
     
