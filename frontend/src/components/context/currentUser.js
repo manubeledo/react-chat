@@ -12,7 +12,6 @@ export default function UserContextLogic(props) {
 
     const getUser = async () => {
         try {
-            console.log('entre')
             await Axios.get('http://localhost:5000/authLogin', {
                 headers: {"x-access-token": localStorage.getItem('token')}
             }).then((response) => {

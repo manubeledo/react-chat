@@ -1,46 +1,42 @@
 import SetUserFront from "./setUserFront"
-import { useState, useEffect, useContext } from 'react'
-import socket from './socket';
+import { useState, useContext } from 'react'
 import MainChatbox from "./mainChatbox";
 import { UserContext } from './context/currentUser'
 import Axios from 'axios'
+import RegisterMessage from "./RegisterMessage";
 
 export default function SetUserLogic () {
-    const [user, setUser] = useState({})
-    const [registrado, setRegistrado] = useState(false);
+    const [logged, setLogged] = useState(false);
     const { setCurrentUser, currentUser } = useContext(UserContext)
-    const [login, setLogin] = useState({})
+    const [formData, setFormData] = useState({})
+    const [register, setRegister] = useState(false)
 
   const handleChange = (e) => {
       e.preventDefault()
       const {name, value} = e.target
-      /*setCurrentUser({ ...currentUser, [name]: value})
-      console.log(currentUser)*/
-      setLogin({ ...login, [name]: value})
-      console.log(login)
+      setFormData({ ...formData, [name]: value})
   }
-
-  const registrar = (e) => {
-    if (user !== "") {
-      setRegistrado(true);
-    }
-  };
 
   const sendData = async (e) => {
     e.preventDefault()
     await Axios.post('http://localhost:5000/login', {
-      data: {...login}
+      data: {...formData}
     }).then((response) => {
-      console.log(response.data)
-      localStorage.setItem('token', response.data.token)
-      setCurrentUser(response.data.user)
+      if(response.data.status == 'login'){
+        localStorage.setItem('token', response.data.token)
+        setCurrentUser(response.data.user)
+        setLogged(true)
+      }else{
+        setRegister(true)
+      }
     })
 
-    registrar()
+
   }
     return(
       <>
-      {registrado == true ? <MainChatbox user={currentUser}/> : <SetUserFront handleChange={handleChange} sendData={sendData}/>}
+      {register == true ? <RegisterMessage/> : ''}
+      {logged == true ? <MainChatbox user={currentUser}/> : <SetUserFront handleChange={handleChange} sendData={sendData}/>}
       </>
     )
 }
