@@ -14,7 +14,6 @@ function bcryptCompare (userExists, user) {
 
 const authAccount = async (req, res, next) => {
     const user = req.body.data
-    console.log(user, 'el user desde body')
     try {
         const userExists = await db.findOne({username: `${user.username}`})
         if(userExists){
@@ -29,7 +28,8 @@ const authAccount = async (req, res, next) => {
                 res.json({
                     auth: true,
                     token: token,
-                    user: userExists
+                    user: userExists,
+                    status: 'login'
                 })
             }else{
                 res.json({
@@ -40,12 +40,9 @@ const authAccount = async (req, res, next) => {
         }else{
             user.pswd = await createHash(user.pswd)
             user.rol = 'user'
-            await db.create(user)
-            let userData = await db.findOne({username: user.username})
             res.json({
-                user: userData,
                 message: 'Tu usuario fue creado con exito!',
-                status: 'User registrated'
+                status: 'register'
             })
             next()
         }
@@ -72,7 +69,5 @@ const verifyJwt = (req, res, next) => {
         })
     }
 }
-
-// SOLUCIONAR DETALLE DEL REGISTRO CON LA FUNCION verifyJwt. 
 
 module.exports = {authAccount, verifyJwt}

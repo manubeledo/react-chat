@@ -1,11 +1,9 @@
-import { useState } from "react"
 import tw from "tailwind-styled-components"
 
 export default function BoxUserSearch ({text, setText}) {
 
     const handleInputChange = ({target}) => {
         setText(target.value)
-        console.log(text)
     }
 
     return(
