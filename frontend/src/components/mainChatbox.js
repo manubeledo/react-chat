@@ -1,8 +1,7 @@
 import tw from "tailwind-styled-components"
 import BoxFullChatbox from './boxFullchatbox'
 import BoxUserState from './boxUserstate'
-import { useContext, useEffect } from "react"
-import { UserContext } from './context/currentUser'
+
 
 export default function MainChatbox () {
     return(
