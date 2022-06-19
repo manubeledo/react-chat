@@ -16,7 +16,9 @@ const authAccount = async (req, res, next) => {
     const user = req.body.data
     try {
         const userExists = await db.findOne({username: `${user.username}`})
+        console.log(userExists)
         if(userExists){
+            console.log('el user existe')
             const match = await bcrypt.compareSync(user.pswd, userExists.pswd)
             if(match){
                 // JSON WEB TOKEN LOGIC 
@@ -38,13 +40,14 @@ const authAccount = async (req, res, next) => {
                 })
             }
         }else{
-            user.pswd = await createHash(user.pswd)
+            console.log('el user no existe')
             user.rol = 'user'
+            user.pswd = await createHash(user.pswd)
+            await db.create(user)
             res.json({
                 message: 'Tu usuario fue creado con exito!',
                 status: 'register'
             })
-            next()
         }
     }catch(error){
         logger.getLogger('outerror').error('Saving error!', error) 

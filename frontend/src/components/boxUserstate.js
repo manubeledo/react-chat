@@ -25,7 +25,7 @@ export default function BoxUserState ({ usuarios }) {
     return(
         <Wrapper>
             <BoxUserSearch text={text} setText={setText}/>
-            <BoxUserbox text={text} setText={setText} connectedUsers={conectados} user={ currentUser } usuarios = { usuarios }/>
+            <BoxUserbox text={text} setText={setText} connectedUsers={conectados} user={currentUser} usuarios={usuarios}/>
         </Wrapper>
     )
 }
