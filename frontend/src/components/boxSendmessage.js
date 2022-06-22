@@ -1,5 +1,5 @@
 import tw from "tailwind-styled-components"
-import {useContext, useEffect, useState} from 'react'
+import {useContext, useState} from 'react'
 import socket from "./socket"
 import { UserContext } from './context/currentUser'
 
@@ -21,10 +21,6 @@ export default function BoxSendMessage () {
         })
     }
 
-    /*useEffect(()=>{
-    console.log(currentUser, 'el current user desde Sendmessage')
-    },[currentUser])*/
-    
     const sendMessage = async (e) => {
         e.preventDefault()
         console.log('Este es el mensaje en sendMessage', msg)
@@ -32,6 +28,12 @@ export default function BoxSendMessage () {
             ...msg,
         })
         socket.emit('newmessage', msg)
+        const input = document.querySelector('#chat-message')
+        input.value = ''
+    }
+
+    const onKeyPress = (e) => {
+        console.log(e.key)
     }
 
     return(
@@ -41,7 +43,7 @@ export default function BoxSendMessage () {
                         <div className="input-group-prepend">
                             <button onClick={sendMessage} className="btn-message"><i className="fa fa-send"></i></button>
                         </div>
-                        <input onChange={handleChange} id="chat-message" type="text" className="form-control" placeholder="Enter text here..."/>
+                        <input autoFocus onChange={handleChange} id="chat-message" type="text" className="form-control"/>
                     </div>
                 </div>
         </Wrapper>
