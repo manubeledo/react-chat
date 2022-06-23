@@ -21,9 +21,7 @@ export default function BoxSendMessage () {
         })
     }
 
-    const sendMessage = async (e) => {
-        e.preventDefault()
-        console.log('Este es el mensaje en sendMessage', msg)
+    const sendMessage = () => {
         setMsg({
             ...msg,
         })
@@ -31,9 +29,16 @@ export default function BoxSendMessage () {
         const input = document.querySelector('#chat-message')
         input.value = ''
     }
+ 
+    const handleClick = (e) => {
+        e.preventDefault()
+        sendMessage()
+    }
 
-    const onKeyPress = (e) => {
-        console.log(e.key)
+    const handleKey = (e) => {
+        if (e.key === 'Enter') {
+            sendMessage()
+        }
     }
 
     return(
@@ -41,9 +46,9 @@ export default function BoxSendMessage () {
                 <div className="chat-message">
                     <div className="input-group mb-0">
                         <div className="input-group-prepend">
-                            <button onClick={sendMessage} className="btn-message"><i className="fa fa-send"></i></button>
+                            <button onClick={handleClick} className="btn-message"><i className="fa fa-send"></i></button>
                         </div>
-                        <input autoFocus onChange={handleChange} id="chat-message" type="text" className="form-control"/>
+                        <input autoFocus onChange={handleChange} onKeyDown = {handleKey} id="chat-message" type="text" className="form-control"/>
                     </div>
                 </div>
         </Wrapper>

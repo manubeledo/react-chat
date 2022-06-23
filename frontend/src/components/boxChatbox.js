@@ -1,12 +1,13 @@
-import { useEffect, useState, useContext } from "react"
-import tw from "tailwind-styled-components"
-import socket from "./socket"
-import { UserContext } from './context/currentUser'
+import { useEffect, useState, useContext, useRef } from "react";
+import tw from "tailwind-styled-components";
+import socket from "./socket";
+import { UserContext } from './context/currentUser';
 
 export default function BoxChatBox () {
     const [firstRender, setFirstRender] = useState(false)
     const [msgs, setMsgs] = useState([])
     const { currentUser, currentReceiver } = useContext(UserContext)
+    const messagesEndRef = useRef(null);
 
     useEffect(() => {
         socket.on('loadmsgs', msg => {
@@ -23,10 +24,14 @@ export default function BoxChatBox () {
         }
     }, [msgs])
 
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView();
+    }, [msgs])
+
     return(
         <Wrapper>
-            {msgs.map(({...msgs}, index) => ((msgs.receiver == currentReceiver && msgs.sender == currentUser.username) || (msgs.sender == currentReceiver && msgs.receiver == currentUser.username)) ? (
-                ((msgs.receiver == currentReceiver) ?
+            {msgs.map(({...msgs}, index) => ((msgs.receiver === currentReceiver && msgs.sender === currentUser.username) || (msgs.sender === currentReceiver && msgs.receiver === currentUser.username)) ? (
+                ((msgs.receiver === currentReceiver) ?
                 <>
                     <div className="leftMessage" key={index}>
                         <p className="message_p" style={{fontWeight: 'normal'}}>{msgs.message}</p>
@@ -41,6 +46,7 @@ export default function BoxChatBox () {
                     </div>
                 </>))
              : <></>)}
+            <div ref={messagesEndRef} />
         </Wrapper>
     )
 }

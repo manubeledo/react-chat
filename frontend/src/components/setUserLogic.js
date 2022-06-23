@@ -22,9 +22,11 @@ export default function SetUserLogic () {
     await Axios.post('http://localhost:5000/login', {
       data: {...formData}
     }).then((response) => {
-      if(response.data.status == 'login'){
+      if(response.data.status === 'login'){
         localStorage.setItem('token', response.data.token)
-        setCurrentUser(response.data.user)
+        let userAuthenticated = response.data.user
+        userAuthenticated.pic = '/avatar/unknown.png'
+        setCurrentUser(userAuthenticated)
         setLogged(true)
       }else{
         setRegister(true)
@@ -35,8 +37,8 @@ export default function SetUserLogic () {
   }
     return(
       <>
-      {register == true ? <RegisterMessage/> : ''}
-      {logged == true ? <MainChatbox user={currentUser}/> : <SetUserFront handleChange={handleChange} sendData={sendData}/>}
+      {register === true ? <RegisterMessage/> : ''}
+      {logged === true ? <MainChatbox user={currentUser}/> : <SetUserFront handleChange={handleChange} sendData={sendData}/>}
       </>
     )
 }
