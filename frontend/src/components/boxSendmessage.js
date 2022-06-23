@@ -20,10 +20,6 @@ export default function BoxSendMessage () {
             chatID: 11111
         })
     }
-
-    /*useEffect(()=>{
-    console.log(currentUser, 'el current user desde Sendmessage')
-    },[currentUser])*/
     
     const sendMessage = async (e) => {
         e.preventDefault()
