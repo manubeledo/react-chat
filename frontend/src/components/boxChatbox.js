@@ -30,17 +30,17 @@ export default function BoxChatBox () {
 
     return(
         <Wrapper>
-            {msgs.map(({...msgs}, index) => ((msgs.receiver === currentReceiver && msgs.sender === currentUser.username) || (msgs.sender === currentReceiver && msgs.receiver === currentUser.username)) ? (
-                ((msgs.receiver === currentReceiver) ?
+            {msgs.map(({...msgs}, index) => ((msgs.receiver === currentReceiver.username && msgs.sender === currentUser.username) || (msgs.sender === currentReceiver.username && msgs.receiver === currentUser.username)) ? (
+                ((msgs.receiver === currentReceiver.username) ?
                 <>
-                    <div className="leftMessage" key={index}>
+                    <div className="rightMessage" rightMessage key={index}>
                         <p className="message_p" style={{fontWeight: 'normal'}}>{msgs.message}</p>
                         <p className="timestamp_p" style={{textAlign: "end"}}>{msgs.timestamp.slice(11,16)}</p>
                     </div>
                 </> 
                 : 
                 <>
-                    <div className="rightMessage" key={index}>
+                    <div className="leftMessage" key={index}>
                         <p className="message_p" style={{fontWeight: 'normal'}}>{msgs.message}</p>
                         <p className="timestamp_p" style={{textAlign: "end"}}>{msgs.timestamp.slice(11,16)}</p>
                     </div>

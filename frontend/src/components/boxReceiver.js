@@ -1,15 +1,17 @@
 import tw from "tailwind-styled-components"
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { UserContext } from './context/currentUser'
 
 export default function BoxReceiver () {
     const { currentReceiver } = useContext(UserContext)
 
+    // console.log(Object.key(currentReceiver), 'objeto currentReceiver')
+
     return(
         <Wrapper>
                 <div class="receiverAvatarDiv">
-                    <img class="receiverAvatar" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar"/> 
-                    <b style={{display: 'inline'}}>{currentReceiver.length > 0 ? currentReceiver : 'Welcome to the chat!'}</b>  
+                    {Object.entries(currentReceiver).length !== 0 ? <img alt="avatar" class="receiverAvatar" src={currentReceiver.pic}></img> : ''}
+                    <b style={{display: 'inline'}}>{Object.entries(currentReceiver).length !== 0 ? currentReceiver.username : 'Welcome to the chat!'}</b>  
                 </div>
         </Wrapper>
     )

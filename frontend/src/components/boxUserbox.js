@@ -5,7 +5,6 @@ import AvatarSelector from './avatarSelector'
 import tw from "tailwind-styled-components"
 
 export default function Userbox(props) {
-        //const [avatar, setAvatar] = useState('../avatar/unknown.png')
         const [showModal, setShowModal] = useState(false)
         const { currentUser } = useContext(UserContext)
 

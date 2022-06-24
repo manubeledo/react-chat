@@ -4,18 +4,23 @@ const socketSettings = (io, db, dbmsgs) => {
     let messages = []
 
 io.on('connection', socket => {
-
     console.log(`New connection ${socket.id}`)
-
     socket.on('newuser', async (usuario) => {
-        usuario.socket_id = socket.id
-        users.push(usuario)
-        usersID[usuario.username] = socket.id
-        io.emit('conectados', users)
+        let exists = users.some((el) => el._id === usuario._id)
+        if(!exists){
+            usuario.socket_id = socket.id
+            users.push(usuario)
+            usersID[usuario.username] = socket.id
+            io.emit('conectados', users)
+        }else{
+            let userUpdate = users.filter(el => {return el._id === usuario._id})
+            userUpdate[0].pic = usuario.pic
+            io.emit('conectados', users)
+        }
+
     })
 
     socket.on('currentChattingUsers', async (usersFromClient) => {
-
         let dbUsersMessages = await dbmsgs.find({
             $or: [
                 {sender: `${usersFromClient.sender}`, receiver: `${usersFromClient.receiver}`}, 
@@ -25,7 +30,7 @@ io.on('connection', socket => {
 
         let socketA = usersID[usersFromClient.sender]
         let socketB = usersID[usersFromClient.receiver]
-
+        
         io.to(socketA).emit('currentChat', dbUsersMessages);
         io.to(socketB).emit('currentChat', dbUsersMessages);
     })

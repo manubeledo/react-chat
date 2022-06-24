@@ -16,10 +16,12 @@ export default function Conectados (props) {
         if(selectedUser){
             selectedUser.classList.remove('selected-user')
             e.currentTarget.classList.add('selected-user')
-            setCurrentReceiver(e.currentTarget.id)
+            const receiver = props.data.filter(el => {return el._id === e.currentTarget.id})
+            setCurrentReceiver(receiver[0])
         }else{
             e.currentTarget.classList.add('selected-user')
-            setCurrentReceiver(e.currentTarget.id)
+            const receiver = props.data.filter(el => {return el._id === e.currentTarget.id})
+            setCurrentReceiver(receiver[0])
         }
     }
 
@@ -30,7 +32,7 @@ export default function Conectados (props) {
     useEffect(() => {
         let updatedValue = {
             sender: currentUser.username,
-            receiver: currentReceiver
+            receiver: currentReceiver.username
         }
         setChattingUsers(updatedValue)
     }, [currentReceiver])
@@ -42,8 +44,8 @@ export default function Conectados (props) {
     return(
         <Wrapper>
          {props.data.map(({...props}) => props.username !== currentUser.username ? (
-              <li onClick={colorBox} className="clearfix" id={props.username} key={props.socket_id}>
-              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar"/>
+              <li onClick={colorBox} className="clearfix" id={props._id} key={props.socket_id} name={props.socket_id}>
+              <img src={props.pic} alt="avatar"/>
               <div className="about">
                       <p className="name">{props.username}</p>
                   <div className="status"> <i className="fa fa-circle offline"></i> left 7 mins ago </div>                                            

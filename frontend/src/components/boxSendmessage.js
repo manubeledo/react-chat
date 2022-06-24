@@ -15,7 +15,7 @@ export default function BoxSendMessage () {
         setMsg({ ...msg, 
             message: value,
             sender: currentUser.username,
-            receiver: currentReceiver,
+            receiver: currentReceiver.username,
             timestamp: time,
             chatID: 11111
         })
