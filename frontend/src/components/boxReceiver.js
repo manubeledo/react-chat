@@ -5,8 +5,6 @@ import { UserContext } from './context/currentUser'
 export default function BoxReceiver () {
     const { currentReceiver } = useContext(UserContext)
 
-    // console.log(Object.key(currentReceiver), 'objeto currentReceiver')
-
     return(
         <Wrapper>
                 <div class="receiverAvatarDiv">

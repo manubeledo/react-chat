@@ -30,7 +30,7 @@ io.on('connection', socket => {
 
         let socketA = usersID[usersFromClient.sender]
         let socketB = usersID[usersFromClient.receiver]
-        
+
         io.to(socketA).emit('currentChat', dbUsersMessages);
         io.to(socketB).emit('currentChat', dbUsersMessages);
     })
