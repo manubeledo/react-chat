@@ -45,5 +45,5 @@ export default function Userbox(props) {
 }
 
 const Wrapper = tw.div `
-border-2 h-120
+h-120
 `

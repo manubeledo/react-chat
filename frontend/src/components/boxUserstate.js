@@ -31,5 +31,5 @@ export default function BoxUserState ({ usuarios }) {
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold bg-left-dark w-4/12 text-center border-1 rounded-l-lg
+text-3xl font-bold bg-left-dark w-4/12 text-center border-1 rounded-l-lg mt-10
 `

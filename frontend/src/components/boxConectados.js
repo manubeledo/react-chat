@@ -57,5 +57,5 @@ export default function Conectados (props) {
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold bg-left-dark text-center rounded-l-lg overflow-auto h-52
+text-3xl font-bold bg-left-dark text-center rounded-l-lg overflow-auto max-h-52
 `
