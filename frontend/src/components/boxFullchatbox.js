@@ -14,5 +14,5 @@ export default function BoxFullChatbox () {
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold bg-new-dark w-9/12 text-center rounded-r-lg
+text-3xl font-bold bg-new-dark w-9/12 text-center rounded-r-lg mt-10
 `

@@ -5,7 +5,6 @@ import AvatarSelector from './avatarSelector'
 import tw from "tailwind-styled-components"
 
 export default function Userbox(props) {
-        //const [avatar, setAvatar] = useState('../avatar/unknown.png')
         const [showModal, setShowModal] = useState(false)
         const { currentUser } = useContext(UserContext)
 
@@ -46,5 +45,5 @@ export default function Userbox(props) {
 }
 
 const Wrapper = tw.div `
-border-2 h-120
+h-120
 `

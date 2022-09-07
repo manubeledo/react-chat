@@ -1,12 +1,13 @@
 import avatarsInfo from '../utils/avatars'
 import { createPortal } from "react-dom";
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import styles from "../css/Modal.module.css";
+import { UserContext } from './context/currentUser';
+import socket from "./socket"
 
 export default function AvatarSelector ({show, onClose}) {
-    console.log(avatarsInfo)
-
     const [isBrowser, setIsBrowser] = useState(false)
+    const { currentUser, setCurrentUser } = useContext(UserContext)
 
     useEffect(() => {
         setIsBrowser(true);
@@ -17,17 +18,28 @@ export default function AvatarSelector ({show, onClose}) {
         onClose();
     }
 
+    const handleAvatar = (e) => {
+        e.preventDefault();
+        onClose();
+        const avatarSrc = e.target.name
+        setCurrentUser({...currentUser, pic: avatarSrc})
+    }
+
+    useEffect(()=>{
+        socket.emit('newuser', currentUser)
+    }, [currentUser])
+
     const modalContent = show ? (
         <div className={styles.overlay}>
             <div className={styles.modal}>
                 <div className={styles.header}>
-                        <button onClick={handleClose} className="btn">Close</button>
+                    <button onClick={handleClose} className="btn">Close</button>
                 </div>
                 <div className={styles.body}>
                     <div className={styles.avatarDivContainer}>
-                        {avatarsInfo.map((el)=>
+                        {avatarsInfo.map((avatar)=>
                             <div className={styles.avatarImgContainer}>
-                                <img alt="avatar" src={el.src} />
+                                <img alt="avatar" key={avatar.name} src={avatar.src} name={avatar.src} onClick={handleAvatar}/>
                             </div>
                         )}
                     </div>
