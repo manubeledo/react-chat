@@ -1,5 +1,5 @@
 import tw from "tailwind-styled-components"
-import {useContext, useEffect, useState} from 'react'
+import {useContext, useState} from 'react'
 import socket from "./socket"
 import { UserContext } from './context/currentUser'
 
@@ -11,7 +11,6 @@ export default function BoxSendMessage () {
         e.preventDefault();
         const {value} = e.target;
         let time = new Date().toISOString();
-        console.log('Este es el USER LOG, y el CURRENT RECEIVER', currentUser, currentReceiver)
         setMsg({ ...msg, 
             message: value,
             sender: currentUser.username,
@@ -23,11 +22,23 @@ export default function BoxSendMessage () {
     
     const sendMessage = async (e) => {
         e.preventDefault()
-        console.log('Este es el mensaje en sendMessage', msg)
         setMsg({
             ...msg,
         })
         socket.emit('newmessage', msg)
+        const input = document.querySelector('#chat-message')
+        input.value = ''
+    }
+ 
+    const handleClick = (e) => {
+        e.preventDefault()
+        sendMessage()
+    }
+
+    const handleKey = (e) => {
+        if (e.key === 'Enter') {
+            sendMessage()
+        }
     }
 
     return(
@@ -35,9 +46,9 @@ export default function BoxSendMessage () {
                 <div className="chat-message">
                     <div className="input-group mb-0">
                         <div className="input-group-prepend">
-                            <button onClick={sendMessage} className="btn-message"><i className="fa fa-send"></i></button>
+                            <button onClick={handleClick} className="btn-message"><i className="fa fa-send"></i></button>
                         </div>
-                        <input onChange={handleChange} id="chat-message" type="text" className="form-control" placeholder="Enter text here..."/>
+                        <input autoFocus onChange={handleChange} onKeyDown = {handleKey} id="chat-message" type="text" className="form-control"/>
                     </div>
                 </div>
         </Wrapper>

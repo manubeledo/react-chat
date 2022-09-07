@@ -19,7 +19,7 @@ const authAccount = async (req, res, next) => {
         console.log(userExists)
         if(userExists){
             console.log('el user existe')
-            const match = await bcrypt.compareSync(user.pswd, userExists.pswd)
+            const match = await bcrypt.compare(user.pswd, userExists.pswd)
             if(match){
                 // JSON WEB TOKEN LOGIC 
                 req.session.user = userExists

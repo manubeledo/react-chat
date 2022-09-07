@@ -13,8 +13,6 @@ const socketConfig = require('./sockets_config/index')
 
 const { authAccount, verifyJwt} = require('./utils/auth/index')
 
-
-
 const server = http.createServer(app)
 const io = require('socket.io')(server, {
     cors: {

@@ -8,10 +8,6 @@ io.on('connection', socket => {
     console.log(`New connection ${socket.id}`)
 
     socket.on('newuser', async (usuario) => {
-        await db.create({
-            username: `${usuario.username}`,
-            pswd: `${usuario.pswd}`
-        }) 
         usuario.socket_id = socket.id
         users.push(usuario)
         usersID[usuario.username] = socket.id

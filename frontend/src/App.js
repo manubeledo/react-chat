@@ -18,8 +18,9 @@ function App() {
         <Route path="/" element={<SetUserLogic/>}></Route>
         <Route path="/chat" element={<MainChatbox/>}></Route>
       </Routes>
-
+      <div id="modal-root"></div>
     </BrowserRouter>
+
   );
 }
 

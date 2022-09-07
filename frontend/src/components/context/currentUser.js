@@ -6,7 +6,8 @@ export const UserContext = createContext([])
 export default function UserContextLogic(props) {
     const [currentUser, setCurrentUser] = useState({
         username: '',
-        pswd: ''
+        pswd: '',
+        pic: '../../avatar/unknown.png'
     })
     const [currentReceiver, setCurrentReceiver] = useState({})
 
