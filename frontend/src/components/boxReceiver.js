@@ -1,13 +1,20 @@
 import tw from "tailwind-styled-components"
+import { useContext } from "react"
+import { UserContext } from './context/currentUser'
 
 export default function BoxReceiver () {
+    const { currentReceiver } = useContext(UserContext)
+
     return(
         <Wrapper>
-                <h6>BoxReceiver</h6>
+                <div class="receiverAvatarDiv">
+                    {Object.entries(currentReceiver).length !== 0 ? <img alt="avatar" class="receiverAvatar" src={currentReceiver.pic}></img> : ''}
+                    <b style={{display: 'inline'}}>{Object.entries(currentReceiver).length !== 0 ? currentReceiver.username : 'Welcome to the chat!'}</b>  
+                </div>
         </Wrapper>
     )
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold underline border-solid border-red-400 border-4 bg-gray-300 w-full h-1/6 text-center
+text-3xl font-bold w-full h-1/12 p=4 text-left
 `

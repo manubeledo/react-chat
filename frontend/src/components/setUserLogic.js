@@ -1,49 +1,44 @@
 import SetUserFront from "./setUserFront"
-import { useNavigate } from "react-router-dom"
-import { useState, useEffect } from 'react'
-import socket from './socket';
+import { useState, useContext } from 'react'
 import MainChatbox from "./mainChatbox";
+import { UserContext } from './context/currentUser'
+import Axios from 'axios'
+import RegisterMessage from "./RegisterMessage";
 
 export default function SetUserLogic () {
-    const [user, setUser] = useState({})
-    const [usuarios, setUsuarios] = useState([])
-    const [registrado, setRegistrado] = useState(false);
-    const navigate = useNavigate()
+    const [logged, setLogged] = useState(false);
+    const { setCurrentUser, currentUser } = useContext(UserContext)
+    const [formData, setFormData] = useState({})
+    const [register, setRegister] = useState(false)
 
   const handleChange = (e) => {
       e.preventDefault()
       const {name, value} = e.target
-      setUser({ ...user, name: value})
+      setFormData({ ...formData, [name]: value})
   }
-
-  const registrar = (e) => {
-    if (user !== "") {
-      setRegistrado(true);
-    }
-  };
 
   const sendData = async (e) => {
     e.preventDefault()
-    await fetch('http://localhost:5000/login', {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: {'Content-Type': 'application/json'},
-      credentials: 'include',
+    await Axios.post('http://localhost:5000/login', {
+      data: {...formData}
+    }).then((response) => {
+      if(response.data.status === 'login'){
+        localStorage.setItem('token', response.data.token)
+        let userAuthenticated = response.data.user
+        userAuthenticated.pic = '/avatar/unknown.png'
+        setCurrentUser(userAuthenticated)
+        setLogged(true)
+      }else{
+        setRegister(true)
+      }
     })
 
-    registrar()
-
-    socket.on('conectados', users => {  
-      setUsuarios(users)
-    })
-    // navigate('/chat')
-    console.log(user)
-    console.log(usuarios)
 
   }
     return(
       <>
-      {registrado == true ? <MainChatbox user = { user } usuarios = { usuarios }/> : <SetUserFront handleChange={handleChange} sendData={sendData}/>}
+      {register === true ? <RegisterMessage/> : ''}
+      {logged === true ? <MainChatbox user={currentUser}/> : <SetUserFront handleChange={handleChange} sendData={sendData}/>}
       </>
     )
 }

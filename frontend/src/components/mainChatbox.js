@@ -1,17 +1,17 @@
 import tw from "tailwind-styled-components"
 import BoxFullChatbox from './boxFullchatbox'
-import BoxReceiver from "./boxReceiver"
 import BoxUserState from './boxUserstate'
 
-export default function MainChatbox ({ user }) {
+
+export default function MainChatbox () {
     return(
         <Wrapper>
-            <BoxUserState user = { user }/>
+            <BoxUserState/>
             <BoxFullChatbox/>
         </Wrapper>
     )
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold underline border-solid border-black border-4 mt-10 mr-40 ml-40 mb-10 h-128 bg-gray-300 flex flex-row justify-start
+text-3xl font-bold mr-80 ml-80 mt-10 mb-10 h-128 bg-background-chat flex flex-row justify-start
 `

@@ -2,37 +2,34 @@ import tw from "tailwind-styled-components"
 import BoxUserSearch from "./boxUsersearch"
 import BoxUserbox from "./boxUserbox"
 import socket from "./socket"
-import {useState, useEffect} from "react"
+import {useState, useEffect, useContext } from "react"
+import { UserContext } from './context/currentUser'
 
 
-export default function BoxUserState ({ user, usuarios }) {
-
+export default function BoxUserState ({ usuarios }) {
     const [conectados, setConectados] = useState([]);
-
-    useEffect(() => {
-        console.log(conectados, 'los conectados')
-    }, [conectados])
+    const [text, setText] = useState('');
+    const { currentUser, getUser } = useContext(UserContext)
 
     useEffect(()=>{
-        socket.emit("newuser", user);
+        getUser()
+        socket.emit("newuser", currentUser);
     },[])
     
     useEffect(()=>{
         socket.on('conectados', users => {  
-            console.log('Adentro del socket', users)
             setConectados(users)
         })
-        console.log('conectados', conectados)
     }, [])
 
     return(
         <Wrapper>
-            <BoxUserSearch/>
-            <BoxUserbox connectedUsers={conectados} user={ user } usuarios = { usuarios }/>
+            <BoxUserSearch text={text} setText={setText}/>
+            <BoxUserbox text={text} setText={setText} connectedUsers={conectados} user={currentUser} usuarios={usuarios}/>
         </Wrapper>
     )
 }
 
 const Wrapper = tw.div `
-text-3xl font-bold underline border-solid border-blue-400 border-4 bg-gray-300 w-3/12 text-center
+text-3xl font-bold bg-left-dark w-4/12 text-center border-1 rounded-l-lg mt-10
 `

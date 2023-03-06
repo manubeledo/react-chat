@@ -1,10 +1,6 @@
 require('dotenv').config();
-let mongoose = require('mongoose');
-const logger = require('../../utils/logger')
-
-function test(){
-    console.log('un console log desde config', mongoose)
-}
+const mongoose = require('mongoose');
+const logger = require('../../utils/logs/logger')
 
 const MONGO_DB = process.env.MONGO_DB_URI;
 const CONNECT = `${MONGO_DB}`
@@ -25,8 +21,7 @@ const Schema = mongoose.Schema;
 
 const chatsSchema = new Schema({
     username: String,
-    usermail: String,
-    chat: []
+    pswd: String
 })
 
 const newChatsSchema = new Schema({
@@ -37,9 +32,9 @@ const newChatsSchema = new Schema({
     message: String
 })
 
-const chatModel = mongoose.model('chat', chatsSchema)
-const newChatModel = mongoose.model('newChat', newChatsSchema)
+const chatModel = mongoose.model('usuarios', chatsSchema)
+const newChatModel = mongoose.model('mensajes', newChatsSchema)
 
 
-module.exports = {chatModel, newChatModel, test}
+module.exports = {chatModel, newChatModel}
 

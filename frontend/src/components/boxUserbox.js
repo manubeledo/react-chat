@@ -1,41 +1,49 @@
-import socket from "./socket"
-import {useState, useEffect, useRef} from "react"
 import Conectados from './boxConectados'
+import { useState, useContext } from 'react'
+import { UserContext } from './context/currentUser'
+import AvatarSelector from './avatarSelector'
+import tw from "tailwind-styled-components"
 
 export default function Userbox(props) {
-    // socket.on('conectados', users => {  
-    //     setConectados(users)
-    // })
+        const [showModal, setShowModal] = useState(false)
+        const { currentUser } = useContext(UserContext)
 
-    // useEffect(() => {
-    //     console.log(conectados, 'los conectados')
-    // }, [conectados])
-    
-    // useEffect(()=>{
-    //     socket.emit("newuser", user);
-    //     socket.on('conectados', users => {  
-    //         setConectados(users)
-    //     })
-    //     console.log('conectados', conectados)
-    // }, [])
-    console.log('los usuarios', props)
+        const pencil = document.querySelector('.pencil')
+        const onImageHover = () => {
+            pencil.style.visibility = 'visible'
+        }
+        const notImageHover = () => {
+            pencil.style.visibility = 'hidden'
+        }
+        const onAvatarClick = () => {
+            setShowModal(true)
+        }
+
+        const usersFilter = props.connectedUsers.filter(user => user.username.toLowerCase().includes(props.text.toLocaleLowerCase()))
+
         return(
             <>
+            <Wrapper>
+            <div className="aboutMeDiv" style={{padding: '10px'}}>
+                <div onClick={onAvatarClick} className="myAvatarDiv">
+                    <img className="avatarImg" onMouseLeave={notImageHover} onMouseEnter={onImageHover} src={currentUser.pic} alt="avatar"/>
+                    <i className="fa-solid fa-pencil pencil"></i>
+                </div>
+                <div className="connected_me">
+                    <p> {props.user.username} </p>                                           
+                </div>
+            </div>
             <div id="plist" className="people-list">
                 <ul className="list-unstyled chat-list mt-2 mb-0" id="people-list">
-                    <h1>Este sos vos!</h1>
-                    <li className="clearfix" id="clearfix">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar"/>
-                        <div className="about">
-                                <div className="name">{props.user.name }</div>
-                            <div className="status"> <i className="fa fa-circle offline"></i> left 7 mins ago </div>                                            
-                        </div>
-                    </li>
-                    <h1>Conectados:</h1>
-                    <Conectados data={props.connectedUsers}></Conectados>
+                    <Conectados data={usersFilter}></Conectados>
                 </ul>
             </div>
+            <AvatarSelector show={showModal} onClose={() => setShowModal(false)}></AvatarSelector>
+            </Wrapper>
             </>
         )
-
 }
+
+const Wrapper = tw.div `
+h-120
+`
