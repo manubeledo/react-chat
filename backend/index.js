@@ -35,8 +35,8 @@ app.use(session({
     }
 }))
 
-let whitelist = ['http://localhost:3000']
-let corsConfig = {
+const whitelist = ['http://localhost:3000']
+const corsConfig = {
     origin: function(origin, callback) {
         if (whitelist.indexOf(origin) !== -1){
             callback(null, true)
